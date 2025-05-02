@@ -16,12 +16,13 @@ var pieces = []
 var wall_kicks
 var other_tetrominos: Array[Tetromino] = []
 var rotacion_index = 0
+var sombra 
 
 @onready var timer = $Timer
-
 @onready var pieceEscena = preload("res://Escenas/piece.tscn")
-
+@onready var sombraEscena = preload("res://Escenas/sombra.tscn")
 var tetromino_cells
+
 func _ready():
 	tetromino_cells = Shared.cells [tetromino_data.tetromino_type]
 	
@@ -35,7 +36,26 @@ func _ready():
 	if is_next_piece == false:
 		position = tetromino_data.spawn_position
 		wall_kicks = Shared.wall_kicks_i if tetromino_data.tetromino_type == Shared.Tetromino.I else Shared.wall_kicks_jlostz
-		
+		sombra = sombraEscena.instantiate() as sombra
+		sombra.data = tetromino_data
+		get_tree().root.add_child.call_deferred(sombra)
+		dropSombra.call_deferred()
+func dropSombra():
+	var posicionFinalDrop
+	var updatePosicion = calculate_global_position(Vector2.DOWN, global_position)
+	
+	while updatePosicion != null:
+		updatePosicion = calculate_global_position(Vector2.DOWN, updatePosicion)
+		if updatePosicion != null:
+			posicionFinalDrop = updatePosicion
+	if posicionFinalDrop != null:
+		var hijos = get_children().filter(func (c): return c is Piece)
+		var piezasPosicion = []
+		for i in hijos.size():
+			piezasPosicion.append(hijos[i].position)
+		sombra.set_sombra(posicionFinalDrop, piezasPosicion)
+	return posicionFinalDrop
+			
 func _input(_event):
 	if Input.is_action_just_pressed("izquierda"):
 		move(Vector2.LEFT)
@@ -54,6 +74,8 @@ func move(direction: Vector2) -> bool:
 	var newPosition = calculate_global_position(direction, global_position)
 	if newPosition: 
 		global_position = newPosition
+		if direction != Vector2.DOWN:
+			dropSombra.call_deferred()
 		return true
 	return false
 func calculate_global_position(direction: Vector2, starting_global_position: Vector2):
@@ -81,6 +103,7 @@ func lock():
 	timer.stop()
 	lock_tetromino.emit(self)
 	set_process_input(false)
+	sombra.queue_free()
 	
 func colliding_with_tetrominos(direction: Vector2, starting_global_position: Vector2):
 	for tetromino in other_tetrominos:
@@ -102,6 +125,7 @@ func rotar_tetromino(direction: int):
 	if !test_wall_kicks(rotacion_index,direction):
 		rotacion_index = original_rotacion_index
 		aplicar_rotacion(-direction)
+	dropSombra.call_deferred()
 	
 func aplicar_rotacion(direction: int):
 	var rotacionMatrix = Shared.clockwise_rotation_matrix if direction == 1 else Shared.counter_clockwise_rotation_matrix

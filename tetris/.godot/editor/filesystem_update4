@@ -1,0 +1,15 @@
+res://Escenas/main.tscn
+res://Escenas/piece.tscn
+res://Escenas/tetromino.tscn
+res://scripts/board.gd
+res://Escenas/sombra.tscn
+res://scripts/sombra.gd
+res://scripts/tetromino.gd
+res://Resources/l_piece_data.tres
+res://Resources/i_piece_data.tres
+res://Resources/j_piece_data.tres
+res://Resources/s_piece_data.tres
+res://Resources/o_piece_data.tres
+res://Resources/z_piece_data.tres
+res://Resources/t_piece_data.tres
+res://scripts/piece.gd

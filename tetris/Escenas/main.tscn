@@ -2,8 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://dj1olp7v7y623" path="res://assets/Border.png" id="1_vt1rs"]
 [ext_resource type="Texture2D" uid="uid://dddenph2txf1h" path="res://assets/Grid.png" id="2_0kh0y"]
-[ext_resource type="Script" uid="uid://bsud4oo2rthat" path="res://scripts/piece_spawner.gd" id="3_7xwpo"]
-[ext_resource type="Script" uid="uid://dmvn8jirscu0y" path="res://scripts/board.gd" id="4_2ia52"]
+[ext_resource type="Script" path="res://scripts/piece_spawner.gd" id="3_7xwpo"]
+[ext_resource type="Script" path="res://scripts/board.gd" id="4_2ia52"]
 [ext_resource type="PackedScene" uid="uid://bmf2ddwlxdlta" path="res://Escenas/tetromino.tscn" id="5_2ia52"]
 
 [node name="main" type="Node"]
