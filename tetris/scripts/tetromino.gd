@@ -40,6 +40,9 @@ func _ready():
 		sombra.data = tetromino_data
 		get_tree().root.add_child.call_deferred(sombra)
 		dropSombra.call_deferred()
+	else: 
+		timer.stop()
+		set_process_input(false)
 func dropSombra():
 	var posicionFinalDrop
 	var updatePosicion = calculate_global_position(Vector2.DOWN, global_position)

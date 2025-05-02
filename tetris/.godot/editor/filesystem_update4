@@ -13,3 +13,6 @@ res://Resources/o_piece_data.tres
 res://Resources/z_piece_data.tres
 res://Resources/t_piece_data.tres
 res://scripts/piece.gd
+res://scripts/piece_spawner.gd
+res://Escenas/ui.tscn
+res://scripts/ui.gd
